@@ -1,8 +1,10 @@
 package tddmicroexercises.telemetrysystem;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -25,10 +27,14 @@ public class TelemetryDiagnosticControlsTest {
 
     @Test
     public void testCheckTransmission_SuccessfulConnection() throws Exception {
+        // Arrange
         when(mockConnection.getOnlineStatus()).thenReturn(true);
         when(mockTelemetryClient.receive()).thenReturn("Mock diagnostic info");
+
+        // Act
         controls.checkTransmission();
 
+        // Assert
         String actualDiagnosticInfo = controls.getDiagnosticInfo();
         String expectedDiagnosticInfo = "Mock diagnostic info";
         assertEquals(expectedDiagnosticInfo, actualDiagnosticInfo);
@@ -42,8 +48,10 @@ public class TelemetryDiagnosticControlsTest {
 
     @Test
     public void testCheckTransmission_FailedConnection() throws Exception {
+        // Arrange
         when(mockConnection.getOnlineStatus()).thenReturn(false);
 
+        // Act & Assert
         try {
             controls.checkTransmission();
         } catch (Exception e) {

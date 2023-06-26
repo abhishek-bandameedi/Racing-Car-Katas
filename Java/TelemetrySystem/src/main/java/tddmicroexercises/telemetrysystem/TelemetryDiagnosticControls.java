@@ -1,6 +1,6 @@
 package tddmicroexercises.telemetrysystem;
 
-public class TelemetryDiagnosticControls
+public class TelemetryDiagnosticControls implements TransmissionChecker
 {
     private final String DiagnosticChannelConnectionString = "*111#";
     private Communication telemetryClient;
@@ -19,7 +19,7 @@ public class TelemetryDiagnosticControls
 
         this.diagnosticInfo = diagnosticInfo;
     }
-
+    @Override
     public void checkTransmission() throws Exception
     {
         diagnosticInfo = "";
