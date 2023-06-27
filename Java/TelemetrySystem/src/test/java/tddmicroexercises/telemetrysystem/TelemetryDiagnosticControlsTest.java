@@ -35,8 +35,8 @@ public class TelemetryDiagnosticControlsTest {
         controls.checkTransmission();
 
         // Assert
-        String actualDiagnosticInfo = controls.getDiagnosticInfo();
         String expectedDiagnosticInfo = "Mock diagnostic info";
+        String actualDiagnosticInfo = controls.getDiagnosticInfo();
         assertEquals(expectedDiagnosticInfo, actualDiagnosticInfo);
 
         verify(mockConnection).disconnect();
@@ -55,14 +55,15 @@ public class TelemetryDiagnosticControlsTest {
         try {
             controls.checkTransmission();
         } catch (Exception e) {
+
+            String expectedErrorMessage = "Unable to connect.";
+            assertEquals(expectedErrorMessage, e.getMessage());
+
             verify(mockConnection).disconnect();
             verify(mockConnection, times(3)).getOnlineStatus();
             verify(mockConnection, times(3)).connect("*111#");
             verify(mockTelemetryClient, never()).send(anyString());
             verify(mockTelemetryClient, never()).receive();
-
-            String expectedErrorMessage = "Unable to connect.";
-            assertEquals(expectedErrorMessage, e.getMessage());
         }
     }
 }
